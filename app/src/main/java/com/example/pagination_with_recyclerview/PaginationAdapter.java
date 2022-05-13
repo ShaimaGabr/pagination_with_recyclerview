@@ -1,6 +1,7 @@
 package com.example.pagination_with_recyclerview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.pagination_with_recyclerview.model.Users;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
 public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<Movie> movieList;
+    private List<Users> movieList;
     private static final int LOADING = 0;
     private static final int ITEM = 1;
     private boolean isLoadingAdded = false;
@@ -30,7 +32,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         movieList = new LinkedList<>();
     }
 
-    public void setMovieList(List<Movie> movieList) {
+    public void setMovieList(List<Users> movieList) {
         this.movieList = movieList;
     }
 
@@ -56,12 +58,11 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        Movie movie = movieList.get(position);
+        Users user = movieList.get(position);
         switch (getItemViewType(position)) {
             case ITEM:
                 MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
-                movieViewHolder.movieTitle.setText(movie.getTitle());
-                Glide.with(context).load(movie.getImageUrl()).apply(RequestOptions.centerCropTransform()).into(movieViewHolder.movieImage);
+                movieViewHolder.movieTitle.setText(user.getTitle());
                 break;
 
             case LOADING:
@@ -83,14 +84,14 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new Movie());
+        add(new Users());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
         int position = movieList.size() - 1;
-        Movie result = getItem(position);
+        Users result = getItem(position);
 
         if (result != null) {
             movieList.remove(position);
@@ -98,18 +99,18 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public void add(Movie movie) {
-        movieList.add(movie);
+    public void add(Users user) {
+        movieList.add(user);
         notifyItemInserted(movieList.size() - 1);
     }
 
-    public void addAll(List<Movie> moveResults) {
-        for (Movie result : moveResults) {
-            add(result);
+    public void addAll(List<Users> moveResults) {
+        for (Users user : moveResults) {
+            add(user);
         }
     }
 
-    public Movie getItem(int position) {
+    public Users getItem(int position) {
         return movieList.get(position);
     }
 

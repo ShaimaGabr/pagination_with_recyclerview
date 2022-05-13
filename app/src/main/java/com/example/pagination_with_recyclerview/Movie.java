@@ -11,6 +11,7 @@ public class Movie {
 
     public Movie(){}
 
+
     public Movie(String title, String imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
